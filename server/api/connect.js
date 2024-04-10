@@ -1,5 +1,8 @@
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
 const mongoose = require('mongoose');
-const mongodbURI = process.env.MONGODB_URI_PROD || "mongodb://localhost:27017/wordle";
+const mongodbURI = process.env.MONGODB_URI_PROD;
 
 const connectToMongoDB = async () => {
   try {
