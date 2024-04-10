@@ -3,7 +3,7 @@ const mongodbURI = process.env.MONGODB_URI_PROD || "mongodb://localhost:27017/wo
 
 const connectToMongoDB = async () => {
   try {
-    await mongoose.connect(mongodbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(mongodbURI);
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

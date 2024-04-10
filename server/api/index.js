@@ -22,8 +22,9 @@ connectToMongoDB()
 
 
 app.get('/',async (req, res) => {
-    const data = await Test.find({})
-    res.send({data})
+    res.send('Server running fine')
+    // const data = await Test.find({})
+    // res.send({data})
 })
 
 app.post('/test',async (req,res) => {
