@@ -10,7 +10,7 @@ const Register = (props) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const url = process.env.BACKEND_URL || 'http://localhost:5000/';
+  const url = process.env.API_URL || 'http://localhost:5000/';
 
   const handleRegister = async () => {
     try {

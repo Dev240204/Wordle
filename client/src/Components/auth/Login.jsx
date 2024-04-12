@@ -10,7 +10,7 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const url = process.env.BACKEND_URL || 'http://localhost:5000/';
+  const url = process.env.API_URL || 'http://localhost:5000/';
 
   const handleLogin = async () => {
     try {
