@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Context/AuthStore';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -17,16 +20,37 @@ const Login = (props) => {
       });
       if (response.data.success) {
         useAuthStore.getState().login(response.data.data);
-        console.log('User logged in');
+        toast.success('Login successful',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        });
         navigate('/');
       }
       if (response.data.status === 404) {
-        console.log('User not found');
+        toast.error('User not found',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        });
       }
       if (response.data.status === 401) {
-        console.log('Invalid credentials');
+        toast.error('Invalid Credentials',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        });
       }
     } catch (error) {
+      toast.error('Login failed:',{
+        autoClose: 2000,
+        position: "top-center",
+        theme: "dark",
+        closeOnClick: true,
+      });
       console.error('Login failed:', error.message);
     }
   };

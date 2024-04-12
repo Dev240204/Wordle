@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Context/AuthStore';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = (props) => {
   const [email, setEmail] = useState('');
@@ -19,19 +21,45 @@ const Register = (props) => {
       });
       if (response.data.success) {
         useAuthStore.getState().login(response.data.data);
-        console.log('User logged in')
+        toast.success('User registered successfully',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        })
         navigate('/');
       }
       if (response.data.status === 409) {
-        console.log('Email already exists');
+        toast.error('Email already exists',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        })
       }
       if (response.data.status === 408) {
-        console.log('Username already exists');
+        toast.error('Username already exists',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        })
       }
       if(response.data.status === 400){
-        console.log('Password must be at least 5 characters');
+        toast.error('Password must be at least 5 characters',{
+          autoClose: 2000,
+          position: "top-center",
+          theme: "dark",
+          closeOnClick: true,
+        })
       }
     } catch (error) {
+      toast.error('Register failed:',{
+        autoClose: 2000,
+        position: "top-center",
+        theme: "dark",
+          closeOnClick: true,
+      })
       console.error('Register failed:', error.message);
     }
   };

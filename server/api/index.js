@@ -27,16 +27,43 @@ app.get('/',async (req, res) => {
     // res.send({data})
 })
 
-app.post('/test',async (req,res) => {
+app.post('/word',async (req,res) => {
   try {
-    const newData = req.body.name
-    const result = await Test.create({ name: newData });
-    res.send({ success: true, data: result });
+    const newData = req.body.word
+    const word = await Word.findOne({ word: newData })
+    if (word) {
+      return res.send({ success: false, message: 'Word already exists' });
+    }else{
+      const result = await Word.create({ word: newData });
+      res.send({ success: true, data: result });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 })
+
+app.get('/word', async (req,res) => {
+  try{
+    const count = await Word.countDocuments()
+    const random = Math.floor(Math.random() * count)
+    let word = await Word.findOne().skip(random)
+    word = word.word
+    res.send({data: word})
+  }catch(e){
+    console.log("Error in fetching word", e)
+  }
+})
+
+app.get('/leaderboard', async (req, res) => {
+  try {
+    const users = await User.find().sort({ score: -1 }); // Fetch users and sort by score in descending order
+    res.send(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
