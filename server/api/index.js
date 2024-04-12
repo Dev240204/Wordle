@@ -48,8 +48,7 @@ app.get('/word', async (req,res) => {
     const count = await Word.countDocuments()
     const random = Math.floor(Math.random() * count)
     let word = await Word.findOne().skip(random)
-    word = word.word
-    res.send({data: word})
+    res.send({data: word.word})
   }catch(e){
     console.log("Error in fetching word", e)
   }
