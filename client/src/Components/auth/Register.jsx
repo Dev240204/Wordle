@@ -27,6 +27,7 @@ const Register = (props) => {
           theme: "dark",
           closeOnClick: true,
         })
+        console.log('User registered successfully:', response.data.data);
         navigate('/');
       }
       if (response.data.status === 409) {
@@ -36,6 +37,7 @@ const Register = (props) => {
           theme: "dark",
           closeOnClick: true,
         })
+        console.error('Email already exists:', response.data.message);
       }
       if (response.data.status === 408) {
         toast.error('Username already exists',{
@@ -44,6 +46,7 @@ const Register = (props) => {
           theme: "dark",
           closeOnClick: true,
         })
+        console.error('Username already exists:', response.data.message);
       }
       if(response.data.status === 400){
         toast.error('Password must be at least 5 characters',{
@@ -52,6 +55,7 @@ const Register = (props) => {
           theme: "dark",
           closeOnClick: true,
         })
+        console.error('Password must be at least 5 characters:', response.data.message);
       }
     } catch (error) {
       toast.error('Register failed:',{

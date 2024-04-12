@@ -26,6 +26,7 @@ const Login = (props) => {
           theme: "dark",
           closeOnClick: true,
         });
+        console.log('Login successful:', response.data.data);
         navigate('/');
       }
       if (response.data.status === 404) {
@@ -35,6 +36,7 @@ const Login = (props) => {
           theme: "dark",
           closeOnClick: true,
         });
+        console.error('User not found:', response.data.message);
       }
       if (response.data.status === 401) {
         toast.error('Invalid Credentials',{
@@ -43,6 +45,7 @@ const Login = (props) => {
           theme: "dark",
           closeOnClick: true,
         });
+        console.error('Invalid Credentials:', response.data.message);
       }
     } catch (error) {
       toast.error('Login failed:',{
