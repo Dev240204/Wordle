@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Leaderboard = ({ showLeaderboard }) => {
   const [users, setUsers] = useState([]);
-  const url = process.env.BACKEND_URL || 'http://localhost:5000/';
+  const url = "https://wordle-backend-dev.vercel.app/";
 
   useEffect(() => {
     const fetchUserData = async () => {
