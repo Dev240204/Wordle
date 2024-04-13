@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./Routes/HomePage"
+import Home from "./Components/Home"
 import Authentication from "./Components/auth/Authentication";
 import useAuthStore from "./Context/AuthStore";
-import ProfilePage from "./Routes/ProfilePage";
 import { boardDefault } from "./Components/Words";
 import { useState, createContext, useEffect } from "react";
 import axios from "axios";
+import Navbar from "./Components/Navbar";
+import Profile from "./Components/Profile";
 
 export const AppContext = createContext();
 
@@ -16,7 +17,7 @@ function App() {
   const [disabledLetters, setDisabledLetters] = useState([])
   const [gameover, setGameover] = useState({gameover: false, guessedWord: false})
   const [correctWord, setCorrectWord] = useState("")
-  const url = "https://wordle-backend-dev.vercel.app/";
+  const url = "https://wordle-backend-dev.vercel.app/"
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,8 +36,6 @@ function App() {
       console.log(e)
     }
   }
-
-  // const correctWord = "RIGHT"
 
   const onSelectLetter = (letter) => {
     if (currAttempt.letterPos > 4) return; 
@@ -82,12 +81,13 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{ board, setBoard, currAttempt, setCurrAttempt, onSelectLetter, disabledLetters, setDisabledLetters, gameover, setGameover, correctWord, setCorrectWord, onDelete, onEnter, correctWord}}>
+    <AppContext.Provider value={{ board, setBoard, currAttempt, setCurrAttempt, disabledLetters, setDisabledLetters, gameover, setGameover, correctWord, setCorrectWord, onDelete, onEnter, onSelectLetter, url}}>
+      <Navbar />
       <Router>
         <Routes>
             <Route path="/auth" element={<Authentication />} />
-            <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/auth" replace />} />
-            <Route path="/profile" element={isAuthenticated ? <ProfilePage /> : <Navigate to="/auth" replace />} />
+            <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/auth" replace />} />
+            <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/auth" replace />} />
         </Routes>
       </Router>
     </AppContext.Provider>

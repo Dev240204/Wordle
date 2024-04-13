@@ -4,14 +4,20 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import Leaderboard from './Leaderboard';
 import useAuthStore from '../Context/AuthStore';
+import Rules from './Rules';
 
 const Navbar = () => {
   const [showLeaderboard, setShowLeaderboard] = useState(false)
-  const displayLeaderboard = () => {
-    setShowLeaderboard(!showLeaderboard)
+  const [showRules, setShowRules] = useState(false);
+
+  const handleprofile = () => {
+    window.location.href = '/profile'
   }
   const displayRule = () => {
-    console.log('Rule')
+    setShowRules(!showRules);
+  };
+  const displayLeaderboard = () => {
+    setShowLeaderboard(!showLeaderboard)
   }
   const handleLogout = () => {
     useAuthStore.getState().logout()
@@ -19,26 +25,32 @@ const Navbar = () => {
   return (
     <div className='flex flex-row justify-between items-center h-16 border-b-[1px] border-gray-500'>
         <div className="w-full mx-10 flex flex-row items-center justify-between">
-            <div className='logo'>
+          <div className='flex-1'>
+            <a className='logo' href='/'>
               {/* <img src="/images/logo.png" alt="" className='' /> */}
               LOGO
+            </a>
+          </div>
+            <div className='text-4xl font-semibold flex-1 flex justify-center'>
+              WORDLE
             </div>
-            <div className='flex flex-row gap-5'>
+            <div className='flex flex-row gap-5 flex-1 justify-end'>
                 <button onClick={displayRule}>
                   <FaRegQuestionCircle className='text-2xl'/>
                 </button>
-                <a href="/profile">
-                  <FaRegUserCircle className='text-2xl'/>
-                </a>
                 <button onClick={displayLeaderboard}>
                   <MdOutlineLeaderboard className='text-2xl'/>
                 </button>
-                <button onClick={handleLogout}>
+                <button onClick={handleprofile}>
+                    <FaRegUserCircle className='text-2xl'/>
+                </button>
+                <button onClick={handleLogout} className='shadow-sm rounded-md shadow-gray-500 p-2 font-semibold'>
                   Logout
                 </button>
             </div>
         </div>
-        <Leaderboard showLeaderboard={showLeaderboard} />
+        <Leaderboard showLeaderboard={showLeaderboard} setShowLeaderboard={setShowLeaderboard} />
+        <Rules showRules={showRules} setShowRules={setShowRules} />
     </div>
   )
 }

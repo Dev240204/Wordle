@@ -1,10 +1,40 @@
-import { React, useContext } from 'react'
+import { React, useContext, useEffect } from 'react'
 import { AppContext } from '../App'
+import axios from 'axios'
+import useAuthStore from '../Context/AuthStore'
 
 const Gameover = () => {
     const { gameover, currAttempt, correctWord } = useContext(AppContext)
+    const url = "http://localhost:5000/"
+    
+    useEffect(() => {
+      const isGame = localStorage.getItem('isGame')
+      if(isGame){
+        const updateUser = async () => {
+          if (gameover.guessedWord) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log(user._id, "render1");
+            await axios.put(`${url}user/${user._id}`, {
+              word: correctWord,
+              streakBool: true,
+            });
+          } else {
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log(user._id);
+            await axios.put(`${url}user/${user._id}`, {
+              word: correctWord,
+              streakBool: false,
+            });
+          }
+        };
+        updateUser();
+        localStorage.removeItem('isGame');
+      }
+    },[gameover, correctWord]);
+
     const NewGame = () => {
-        window.location.reload()
+      useAuthStore.getState().isGameTrue();
+      window.location.reload()
     }
   return (
     <div className='mt-5 flex flex-col'>

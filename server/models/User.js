@@ -23,8 +23,7 @@ const UserSchema = new Schema({
     image: ImageSchema,
     wordsGuessed: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'Word'
+            type: String,
         }
     ],
     streaks : {
@@ -34,7 +33,11 @@ const UserSchema = new Schema({
     score : {
         type: Number,
         default: 0
-    }
+    },
+    streaksBool : {
+        type: Boolean,
+        default: false
+    },
 })
 
 module.exports = mongoose.model('User', UserSchema);

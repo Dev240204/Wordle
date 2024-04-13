@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
+import { AppContext } from '../App';
+import { RxCross2 } from "react-icons/rx";
 
-const Leaderboard = ({ showLeaderboard }) => {
+const Leaderboard = ({ showLeaderboard, setShowLeaderboard }) => {
   const [users, setUsers] = useState([]);
-  const url = "https://wordle-backend-dev.vercel.app/";
+  const { url } = useContext(AppContext)
+
+  const handleclick = () => {
+    setShowLeaderboard(!showLeaderboard)
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -23,27 +29,29 @@ const Leaderboard = ({ showLeaderboard }) => {
     return () => clearInterval(intervalId);
   }, [url]);
 
-  // Render the component only if showLeaderboard is true
   return (
     <div>
       {showLeaderboard && (
-        <div className="fixed top-20 right-0 h-screen w-1/4 bg-gray-200 shadow-lg">
+        <div className="fixed top-16 right-0 h-screen w-1/4 bg-white shadow-lg text-black">
           <div className="p-4">
-            <h1 className="text-lg font-bold mb-4">Leaderboard</h1>
+            <div className="pb-1 border-b-[1px] border-black flex flex-row items-center justify-between">
+              <h1 className="text-2xl font-bold">Leaderboard</h1>
+              <RxCross2 className='cancel text-2xl cursor-pointer' onClick={handleclick}/>
+            </div>
             <table className="w-full">
               <thead>
                 <tr>
-                  <th className="text-left">Rank</th>
-                  <th className="text-left">User</th>
-                  <th className="text-left">Score</th>
+                  <th className="text-left text-xl">Rank</th>
+                  <th className="text-left text-xl">User</th>
+                  <th className="text-left text-xl">Score</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user, index) => (
                   <tr key={user._id}>
-                    <td>{index + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.score}</td>
+                    <td className='text-lg'>{index + 1}</td>
+                    <td className='text-lg'>{user.name}</td>
+                    <td className='text-lg'>{user.score}</td>
                   </tr>
                 ))}
               </tbody>

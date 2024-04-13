@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Context/AuthStore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {AppContext} from '../../App'
 
 const Register = (props) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const url = "https://wordle-backend-dev.vercel.app/";
+  const { url } = useContext(AppContext)
 
   const handleRegister = async () => {
     try {

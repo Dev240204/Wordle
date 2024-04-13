@@ -3,7 +3,6 @@ const app = express()
 const port = 5000
 const connectToMongoDB = require('./connect');
 const bodyParser = require('body-parser')
-const Test = require('../models/Test')
 const User = require('../models/User')
 const Word = require('../models/Word')
 const cors = require('cors')
@@ -23,8 +22,6 @@ connectToMongoDB()
 
 app.get('/',async (req, res) => {
     res.send('Server running fine')
-    // const data = await Test.find({})
-    // res.send({data})
 })
 
 app.post('/word',async (req,res) => {
@@ -47,11 +44,32 @@ app.get('/word', async (req,res) => {
   try{
     const count = await Word.countDocuments()
     const random = Math.floor(Math.random() * count)
-    let word = await Word.findOne().skip(random)
+    let word = await Word.findOne().limit(1).skip(random)
     res.send({data: word.word})
   }catch(e){
     console.log("Error in fetching word", e)
   }
+})
+
+app.put('/user/:id', async(req,res) => {
+  const {id} = req.params
+  const {word, streakBool} = req.body
+  const user = await User.findById(id)
+  if(streakBool){
+    user.score += 10
+    user.streaks += 1
+    if(!user.wordsGuessed.includes(word)){
+      user.wordsGuessed.push(word)
+    }
+  }else{
+    if(user.score === 0){
+      user.score = 0
+    }else{
+    user.score -= 5
+    }
+    user.streaks = 0
+  }
+  user.save()
 })
 
 app.get('/leaderboard', async (req, res) => {
@@ -63,6 +81,12 @@ app.get('/leaderboard', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+app.get('/profile/:id', async (req,res) => {
+  const {id} = req.params
+  const user = await User.findById(id)
+  res.send({success: true, data: user})
+})
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
