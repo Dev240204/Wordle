@@ -2,9 +2,8 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Context/AuthStore';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {AppContext} from '../../App'
+import { Toaster, toast } from 'sonner'
 
 const Register = (props) => {
   const [email, setEmail] = useState('');
@@ -22,48 +21,27 @@ const Register = (props) => {
       });
       if (response.data.success) {
         useAuthStore.getState().login(response.data.data);
-        toast.success('User registered successfully',{
-          autoClose: 2000,
-          position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
-        })
-        console.log('User registered successfully:', response.data.data);
+        alert('User Registered successful')
         navigate('/');
       }
       if (response.data.status === 409) {
         toast.error('Email already exists',{
-          autoClose: 2000,
           position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
         })
-        console.error('Email already exists:', response.data.message);
       }
       if (response.data.status === 408) {
         toast.error('Username already exists',{
-          autoClose: 2000,
           position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
         })
-        console.error('Username already exists:', response.data.message);
       }
       if(response.data.status === 400){
         toast.error('Password must be at least 5 characters',{
-          autoClose: 2000,
           position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
         })
-        console.error('Password must be at least 5 characters:', response.data.message);
       }
-    } catch (error) {
+    }catch (error) {
       toast.error('Register failed:',{
-        autoClose: 2000,
         position: "top-center",
-        theme: "dark",
-          closeOnClick: true,
       })
       console.error('Register failed:', error.message);
     }
@@ -74,6 +52,7 @@ const Register = (props) => {
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto h-screen gap-20">
+      <Toaster richColors />
       <div className=''>
         {title.split('').map((letter, index) => (
           <div key={index} className={`${color[index]} p-[10px] text-2xl w-12 mx-2 sm:text-4xl sm:w-14 md:text-6xl md:w-20 md:mx-3 inline-block  font-bold rounded-full text-center`}>{letter}</div>

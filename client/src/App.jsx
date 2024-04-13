@@ -22,7 +22,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`${url}word`)
-      console.log(response.data.data)
       setCorrectWord(response.data.data)
     }
     fetchData()
@@ -31,7 +30,6 @@ function App() {
   const insertWord = async (word) => {
     try{
       const response = await axios.post(`${url}word`, {word: word})
-      console.log("Word Inserted :",response)
     }catch(e){
       console.log(e)
     }
@@ -82,7 +80,7 @@ function App() {
 
   return (
     <AppContext.Provider value={{ board, setBoard, currAttempt, setCurrAttempt, disabledLetters, setDisabledLetters, gameover, setGameover, correctWord, setCorrectWord, onDelete, onEnter, onSelectLetter, url}}>
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} />
       <Router>
         <Routes>
             <Route path="/auth" element={<Authentication />} />

@@ -6,18 +6,22 @@ import Leaderboard from './Leaderboard';
 import useAuthStore from '../Context/AuthStore';
 import Rules from './Rules';
 
-const Navbar = () => {
+const Navbar = ({ isAuthenticated }) => {
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const [showRules, setShowRules] = useState(false);
 
   const handleprofile = () => {
-    window.location.href = '/profile'
+    if(isAuthenticated){
+      window.location.href = '/profile'
+    }
   }
   const displayRule = () => {
     setShowRules(!showRules);
   };
   const displayLeaderboard = () => {
-    setShowLeaderboard(!showLeaderboard)
+    if(isAuthenticated){
+      setShowLeaderboard(!showLeaderboard)
+    }
   }
   const handleLogout = () => {
     useAuthStore.getState().logout()
@@ -44,9 +48,11 @@ const Navbar = () => {
                 <button onClick={handleprofile}>
                     <FaRegUserCircle className='text-2xl'/>
                 </button>
-                <button onClick={handleLogout} className='shadow-sm rounded-md shadow-gray-500 p-2 font-semibold'>
-                  Logout
-                </button>
+                {isAuthenticated && (
+                  <button onClick={handleLogout} className='shadow-sm rounded-md shadow-gray-500 p-2 font-semibold'>
+                    Logout
+                  </button>
+                )}
             </div>
         </div>
         <Leaderboard showLeaderboard={showLeaderboard} setShowLeaderboard={setShowLeaderboard} />

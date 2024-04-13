@@ -2,9 +2,8 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Context/AuthStore';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {AppContext} from '../../App'
+import { Toaster, toast } from 'sonner'
 
 
 const Login = (props) => {
@@ -21,39 +20,23 @@ const Login = (props) => {
       });
       if (response.data.success) {
         useAuthStore.getState().login(response.data.data);
-        toast.success('Login successful',{
-          autoClose: 2000,
-          position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
-        });
-        console.log('Login successful:', response.data.data);
+        toast.success('Login successful')
+        alert('Login successful')
         navigate('/');
       }
       if (response.data.status === 404) {
         toast.error('User not found',{
-          autoClose: 2000,
           position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
         });
-        console.error('User not found:', response.data.message);
       }
       if (response.data.status === 401) {
         toast.error('Invalid Credentials',{
-          autoClose: 2000,
           position: "top-center",
-          theme: "dark",
-          closeOnClick: true,
         });
-        console.error('Invalid Credentials:', response.data.message);
       }
     } catch (error) {
       toast.error('Login failed:',{
-        autoClose: 2000,
         position: "top-center",
-        theme: "dark",
-        closeOnClick: true,
       });
       console.error('Login failed:', error.message);
     }
@@ -62,6 +45,7 @@ const Login = (props) => {
   const color = ['bg-orange-300', 'bg-green-300', 'bg-yellow-300', 'bg-blue-300', 'bg-pink-300', 'bg-purple-300','bg-red-400']
   return (
     <div className="flex flex-col justify-center items-center mx-auto h-screen gap-20">
+      <Toaster richColors closeButton />
       <div className=''>
         {title.split('').map((letter, index) => (
           <div key={index} className={`${color[index]} p-[10px] text-2xl w-12 mx-2 sm:text-4xl sm:w-14 md:text-6xl md:w-20 md:mx-3 inline-block  font-bold rounded-full text-center`}>{letter}</div>

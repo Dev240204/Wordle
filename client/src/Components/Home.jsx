@@ -4,7 +4,7 @@ import Keyboard from "./Keyboard";
 import GameOver from "./GameOver";
 import { AppContext } from "../App";
 
-const Home = (props) => {
+const Home = () => {
   const { gameover } = useContext(AppContext)
   return (
     <div className="w-full h-[calc(100vh-64px)px] mt-12 flex flex-col items-center">

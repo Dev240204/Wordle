@@ -13,14 +13,12 @@ const Gameover = () => {
         const updateUser = async () => {
           if (gameover.guessedWord) {
             const user = JSON.parse(localStorage.getItem('user'));
-            console.log(user._id, "render1");
             await axios.put(`${url}user/${user._id}`, {
               word: correctWord,
               streakBool: true,
             });
           } else {
             const user = JSON.parse(localStorage.getItem('user'));
-            console.log(user._id);
             await axios.put(`${url}user/${user._id}`, {
               word: correctWord,
               streakBool: false,

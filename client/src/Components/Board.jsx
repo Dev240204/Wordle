@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
-// import { AppContext } from "../App"
-import { boardDefault } from './Words'
+import React from 'react'
 import Letter from './Letter'
 
 const Board = () => {
-    const [board, setBoard] = useState(boardDefault)
   return (
     <div className='flex max-w-xs max-h-sm border-[1px] border-black mx-2'>
         <div className="mx-auto flex flex-col gap-1">

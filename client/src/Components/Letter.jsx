@@ -29,7 +29,3 @@ const Letter = ({ letterPos, attemptVal }) => {
 };
 
 export default Letter;
-
-// correct - #528d4e
-// almost - #b49f39
-// wrong - #3a393c
