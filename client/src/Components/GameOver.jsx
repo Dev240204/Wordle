@@ -4,8 +4,7 @@ import axios from 'axios'
 import useAuthStore from '../Context/AuthStore'
 
 const Gameover = () => {
-    const { gameover, currAttempt, correctWord } = useContext(AppContext)
-    const url = "http://localhost:5000/"
+    const { gameover, currAttempt, correctWord, url } = useContext(AppContext)
     
     useEffect(() => {
       const isGame = localStorage.getItem('isGame')
