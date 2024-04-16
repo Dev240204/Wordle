@@ -30,10 +30,6 @@ const Navbar = ({ isAuthenticated }) => {
     <div className='flex flex-row justify-between items-center h-16 border-b-[1px] border-gray-500'>
         <div className="w-full mx-10 flex flex-row items-center justify-between">
           <div className='flex-1'>
-            <a className='logo' href='/'>
-              {/* <img src="/images/logo.png" alt="" className='' /> */}
-              LOGO
-            </a>
           </div>
             <div className='text-4xl font-semibold flex-1 flex justify-center'>
               WORDLE
