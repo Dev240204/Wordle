@@ -27,7 +27,7 @@ Open your browser and visit `http://localhost:3000` to play the game!
 ### Server Side (Node.js with Express)
 
 ```
-cd ../
+cd ../server
 npm install
 ```
 
@@ -38,7 +38,7 @@ MONGODB_URI=your_mongodb_atlas_connection_string
 ```
 
 ```
-npm start
+nodemon start
 ```
 
 The server will start running on `http://localhost:5000`.
