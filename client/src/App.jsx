@@ -17,7 +17,7 @@ function App() {
   const [disabledLetters, setDisabledLetters] = useState([])
   const [gameover, setGameover] = useState({gameover: false, guessedWord: false})
   const [correctWord, setCorrectWord] = useState("")
-  const url = "https://wordle-backend-dev.vercel.app/"
+  const url = "localhost:5000/"
 
   useEffect(() => {
     const fetchData = async () => {

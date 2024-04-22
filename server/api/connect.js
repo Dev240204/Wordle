@@ -1,8 +1,8 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require("dotenv").config();
-// }
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
 const mongoose = require('mongoose');
-const mongodbURI = "mongodb+srv://vercel-admin-user:h6cau0IRHv8qsbG4@cluster0.qrzymtg.mongodb.net/wordle?retryWrites=true&w=majority";
+const mongodbURI = process.env.MONGODB_URI;
 
 const connectToMongoDB = async () => {
   try {

@@ -20,7 +20,7 @@ const useAuthStore = create((set) => ({
   isGameTrue: () => {
     localStorage.setItem('isGame', 'true');
     set({ isGame: true });
-  }
+  },
 }));
 
 export default useAuthStore;
